@@ -1,0 +1,27 @@
+version: "3.2"
+
+services:
+  api-books-postgres:
+    image: books/postgres
+    build:
+      context: ../api-books-postgres
+    ports:
+      - 5432:5432
+  api-books:
+    image: books/api
+    build:
+      context: ../api-books
+    environment:
+      - spring.datasource.url=jdbc:postgresql://api-books-postgres:5432/apibook
+    depends_on:
+      - api-books-postgres
+    ports:
+      - 8080:8080
+  gui-books:
+    image: books/gui
+    build:
+      context: ../gui-books
+    depends_on:
+      - api-books
+    ports:
+      - 80:80
