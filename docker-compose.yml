@@ -1,27 +1,29 @@
 version: "3.2"
 
 services:
-  api-books-postgres:
+  books-postgres:
     image: books/postgres
     build:
-      context: ../api-books-postgres
+      context: ../books-postgres
     ports:
       - 5432:5432
-  api-books:
+  books-api:
     image: books/api
     build:
-      context: ../api-books
+      context: ../books-api
     environment:
-      - spring.datasource.url=jdbc:postgresql://api-books-postgres:5432/apibook
+      - spring.datasource.url=jdbc:postgresql://books-postgres:5432/apibook
     depends_on:
-      - api-books-postgres
+      - books-postgres
     ports:
       - 8080:8080
-  gui-books:
+  books-gui:
     image: books/gui
     build:
-      context: ../gui-books
+      context: ../books-gui
     depends_on:
-      - api-books
+      - books-api
+    volumes:
+      - /home/elkouhen/dev/meltingpoc/books-gui:/usr/share/nginx/html
     ports:
       - 80:80
