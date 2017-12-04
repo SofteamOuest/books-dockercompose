@@ -2,13 +2,13 @@ version: "3.2"
 
 services:
   books-postgres:
-    image: books/postgres
+    image: registry.k8.wildwidewest.xyz/repository/docker-repository/books/postgres
     build:
       context: ../books-postgres
     ports:
       - 5432:5432
   books-api:
-    image: books/api
+    image: registry.k8.wildwidewest.xyz/repository/docker-repository/books/api
     build:
       context: ../books-api
     environment:
@@ -18,7 +18,7 @@ services:
     ports:
       - 8080:8080
   books-gui:
-    image: books/gui
+    image: registry.k8.wildwidewest.xyz/repository/docker-repository/books/gui
     build:
       context: ../books-gui
     depends_on:
