@@ -13,8 +13,6 @@ services:
       context: ../books-api
     environment:
       - spring.datasource.url=jdbc:postgresql://books-postgres:5432/apibook
-#    healthcheck:
-#      test: http://localhost:8080/health
     depends_on:
       - books-postgres
     ports:
@@ -23,6 +21,8 @@ services:
     image: registry.k8.wildwidewest.xyz/repository/docker-repository/books/gui
     build:
       context: ../books-gui
+    environment:
+      - books_api_url=books-api
     depends_on:
       - books-api
     volumes:
